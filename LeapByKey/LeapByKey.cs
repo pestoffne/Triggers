@@ -73,7 +73,7 @@ static class Application
   static DateTime last_turn_time = new DateTime(0);
   static TimeSpan one_second = new TimeSpan(TimeSpan.TicksPerSecond);
 
-  static void ScanKeyboard(int pixels, Keys key)
+  static void ScanKeyboard(int pixels, Keys key, int y)
   {
     if (IsPressed(key))
     {
@@ -81,7 +81,7 @@ static class Application
 
       if (current_time - last_turn_time > one_second)
       {
-        Triggers.Leap(pixels);
+        Triggers.Leap(pixels, y);
         last_turn_time = current_time;
         Console.WriteLine("Триггер выполнен {0}", current_time);
       }
@@ -92,6 +92,7 @@ static class Application
   {
     int pixels;
     Keys key;
+    int y;
 
     try
     {
@@ -99,6 +100,7 @@ static class Application
       string[] elements = config.Split(' ', '\r', '\n');
       pixels = Convert.ToInt32(elements[0], 10);
       key = toKey(elements[1]);
+      y = Convert.ToInt32(elements[2]);
     }
     catch (Exception e)
     {
@@ -115,7 +117,7 @@ static class Application
     while (true)
     {
       Thread.Sleep(sleep_ms);
-      ScanKeyboard(pixels, key);
+      ScanKeyboard(pixels, key, y);
     }
   }
 }

@@ -37,30 +37,30 @@ static unsafe class MouseEmulator
 
 static class Triggers
 {
-  public static void Turn(int pixels)
+  public static void Turn(int pixels, int y)
   {
     // Левый поворот на заданное количество пикселей
 
     Point temp = Cursor.Position;
-    Cursor.Position = new Point(0, 40);
+    Cursor.Position = new Point(0, y);
     Thread.Sleep(10);
-    Cursor.Position = new Point(0, 40);
+    Cursor.Position = new Point(0, y);
     MouseEmulator.MouseRightDown();
     Thread.Sleep(10);
-    Cursor.Position = new Point(pixels, 40);
+    Cursor.Position = new Point(pixels, y);
     Thread.Sleep(10);
-    Cursor.Position = new Point(pixels, 40);
+    Cursor.Position = new Point(pixels, y);
     MouseEmulator.MouseRightUp();
     Thread.Sleep(10);
     Cursor.Position = temp;
   }
 
-  public static void Leap(int pixels)
+  public static void Leap(int pixels, int y)
   {
     // Использовать скачёк, повернуться и кинуть ледяную стрелу
 
     SendKeys.SendWait("1");
-    Turn(pixels);
+    Turn(pixels, y);
     SendKeys.SendWait("Q");
   }
 }
